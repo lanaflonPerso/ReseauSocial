@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -26,6 +27,8 @@ public class User extends Likable {
 	private String city;
 	@Column(nullable=false)
 	private String password;
+	@Transient
+	private String pass2;
 	
 	@ManyToMany(mappedBy = "followers")
 	private List<Brick> bricks= new ArrayList<>();
@@ -86,10 +89,18 @@ public class User extends Likable {
 	public void setBricks(List<Brick> bricks) {
 		this.bricks = bricks;
 	}
-
+	public String getPass2() {
+		return pass2;
+	}
+	
+	public void setPass2(String pass2) {
+		this.pass2 = MySQLPassword(pass2);
+	}
+	
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
+
 
 	@Override
 	public int hashCode() {
