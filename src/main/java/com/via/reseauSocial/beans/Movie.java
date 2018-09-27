@@ -12,7 +12,6 @@ import javax.persistence.Table;
 public class Movie extends Likable {
 	
 	private String title;
-	@Column(length = 4)
 	private int releaseDate;
 	private String studio;
 	private String picture;
@@ -67,9 +66,12 @@ public class Movie extends Likable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************
-	 * ***************************************************************************************/		
+	 * ***************************************************************************************/
+	@Override
+	public String toString() {
+		return "Movie [title=" + title + ", releaseDate=" + releaseDate + ", studio=" + studio + ", picture=" + picture
+				+ ", synopsis=" + synopsis + "]";
+	}
 }
