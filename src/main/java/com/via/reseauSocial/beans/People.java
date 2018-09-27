@@ -16,15 +16,16 @@ import javax.persistence.JoinColumn;
 @Table(name= "People")
 @PrimaryKeyJoinColumn(name="id")
 public class People extends Likable {
-	private String lastName;
+	
 	private String firstName;
+	private String lastName;
 	private String nickName;
 	@Column(length = 800)
 	private String biography;
 	private String picture;
 	
 	@Column
-	private Integer birthDay;
+	private Integer birthday;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(
@@ -70,11 +71,11 @@ public class People extends Likable {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	public int getBirthDay() {
-		return birthDay;
+	public int getBirthday() {
+		return birthday;
 	}
-	public void setBirthDay(int year) {
-		this.birthDay = year;
+	public void setBirthday(int year) {
+		this.birthday = year;
 	}
 	public List<Role> getRoles() {
 		return roles;
@@ -102,9 +103,4 @@ public class People extends Likable {
 	/* ****************************************************************************************
 	 * ***************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
-	@Override
-	public String toString() {
-		return "PeopleContent [lastName=" + lastName + ", firstName=" + firstName + ", nickName="
-				+ nickName + ", birthDay=" + birthDay + ", functions=" + roles + "]";
-	}
 }

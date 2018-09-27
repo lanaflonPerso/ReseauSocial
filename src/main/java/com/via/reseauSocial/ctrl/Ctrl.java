@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class Ctrl {
 
+	protected String msgFirstName;
+	protected String msgLastName;
 	protected String msgReleaseDate;
 	protected boolean error= false;
 
@@ -14,6 +16,23 @@ public class Ctrl {
 			error= true;
 		}
 	}
+	
+	public void ctrlFirstName(String firstName) {
+		if(firstName.length() < 3) {
+			msgFirstName= "le prénom doit comporter plus de 2 caractères";
+			error= true;
+		}
+	}
+	public void ctrlLastName(String lastName) {
+		if (lastName.length() < 3) {
+			msgLastName= "le nom doit comporter plus de 2 caractères";
+			error= true;
+		}
+	}
+	
+	public void ctrlPicture(String picture) {
+		
+	}
 
 	/* ****************************************************************************************
 	 * ****************************GETTERS / SETTERS*******************************************
@@ -23,6 +42,12 @@ public class Ctrl {
 	}
 	public String getMsgReleaseDate() {
 		return msgReleaseDate;
+	}
+	public String getMsgFirstName() {
+		return msgFirstName;
+	}
+	public String getMsgLastName() {
+		return msgLastName;
 	}
 
 	@Override
