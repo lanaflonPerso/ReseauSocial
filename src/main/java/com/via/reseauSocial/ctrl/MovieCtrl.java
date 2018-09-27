@@ -25,13 +25,13 @@ public class MovieCtrl extends Ctrl {
 		if(!error) {
 			movieExist(movie.getTitle(), movie.getReleaseDate());
 		}
-		
 	}
 	
 	public void movieExist(String title, int releaseDate) {
 		Movie movie= movieDao.findByTitleAndReleaseDate(title, releaseDate);
 		if(movie != null) {
 			msgMovie= "Un film avec le même titre et sortie la même année est déja dans la base!";
+			error= true;
 		}
 	}
 	
@@ -40,11 +40,6 @@ public class MovieCtrl extends Ctrl {
 			msgTitle= "le titre doit comporter 2 caractères minimum";
 			error= true;
 		}
-	}
-	
-	
-	public void ctrlPicture(String picture) {
-		
 	}
 	
 	public void ctrlSynopsis(String synopsis) {

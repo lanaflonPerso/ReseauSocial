@@ -16,8 +16,6 @@ public class UserCtrl extends Ctrl {
 	private UserDao userDao;
 	
 	private String msgUser;
-	private String msgFirstName;
-	private String msgLastName;
 	private String msgEmail;
 	private String msgPassword;
 	private String msgCity;
@@ -55,18 +53,6 @@ public class UserCtrl extends Ctrl {
 		}
 	}
 	
-	public void ctrlFirstName(String firstName) {
-		if(firstName.length() < 3) {
-			msgFirstName= "le prénom doit comporter plus de 2 caractères";
-			error= true;
-		}
-	}
-	public void ctrlLastName(String lastName) {
-		if (lastName.length() < 3) {
-			msgLastName= "le nom doit comporter plus de 2 caractères";
-			error= true;
-		}
-	}
 	public void ctrlEmail(String email) {
 		Pattern p= Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = p.matcher(email);
@@ -77,12 +63,6 @@ public class UserCtrl extends Ctrl {
 		
 	}
 	
-	public String getMsgFirstName() {
-		return msgFirstName;
-	}
-	public String getMsgLastName() {
-		return msgLastName;
-	}
 	public String getMsgEmail() {
 		return msgEmail;
 	}
@@ -101,7 +81,8 @@ public class UserCtrl extends Ctrl {
 
 	@Override
 	public String toString() {
-		return "UserCtrl [msgUser=" + msgUser + ", msgFirstName=" + msgFirstName + ", msgLastName=" + msgLastName
-				+ ", msgEmail=" + msgEmail + ", msgPassword=" + msgPassword + ", msgCity=" + msgCity + "]";
+		return "UserCtrl [userDao=" + userDao + ", msgUser=" + msgUser + ", msgEmail=" + msgEmail + ", msgPassword="
+				+ msgPassword + ", msgCity=" + msgCity + ", msgFirstName=" + msgFirstName + ", msgLastName="
+				+ msgLastName + ", msgReleaseDate=" + msgReleaseDate + ", error=" + error + "]";
 	}
 }
