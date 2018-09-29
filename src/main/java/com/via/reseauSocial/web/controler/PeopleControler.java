@@ -5,6 +5,8 @@ import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,11 @@ public class PeopleControler {
 	private PeopleDao peopleDao;
 	@Autowired
 	private PeopleCtrl peopleCtrl;
+	
+	@GetMapping(value = "/peoples/{id}")
+	public People viewPeople(@PathVariable int id) {
+	    return peopleDao.findById(id);
+	}
 	
 	@PostMapping(value = "/peoples/add")
     public ResponseEntity<String> addPeople(@RequestBody People people) {

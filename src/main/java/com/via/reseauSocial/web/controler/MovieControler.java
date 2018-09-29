@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +30,6 @@ public class MovieControler {
        return movieDao.findAll();
     }
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value = "/movies/{id}")
 	public Movie viewMovie(@PathVariable int id) {
 	    return movieDao.findById(id);
@@ -40,7 +38,6 @@ public class MovieControler {
     @PostMapping(value = "/movies/add")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
     	movieCtrl.addMovieCtrl(movie);
-    	System.out.println(movieCtrl.toString());
     	if(!movieCtrl.isError()) {
     		Movie newMovie= movieDao.save(movie);
     		URI location= ServletUriComponentsBuilder

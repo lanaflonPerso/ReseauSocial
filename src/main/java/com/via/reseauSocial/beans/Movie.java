@@ -72,6 +72,7 @@ public class Movie extends Likable {
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", releaseDate=" + releaseDate + ", studio=" + studio + ", picture=" + picture
-				+ ", synopsis=" + synopsis + "]";
+				+ ", synopsis=" + synopsis + ", toString()=" + super.toString() + "]";
 	}
+	
 }

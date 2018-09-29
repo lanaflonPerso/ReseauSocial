@@ -9,5 +9,6 @@ import com.via.reseauSocial.beans.People;
 public interface PeopleDao extends JpaRepository<People, Integer> {
 
 	People findByFirstNameAndLastName(String firstName, String lastName);
+	People findById(int id);
 
 }
