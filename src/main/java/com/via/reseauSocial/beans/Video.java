@@ -9,7 +9,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 
-public class Video {
+public class Video extends Likable {
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
 	@JoinTable(
@@ -27,6 +27,14 @@ public class Video {
 	)
 	private List<Category> categorys= new ArrayList<>();
 	
+	
+	public Video() {
+		super();
+	}
+	public Video(int id) {
+		super(id);
+	}
+	
 	/* ****************************************************************************************
 	 * ****************************GETTERS / SETTERS PERSONEL**********************************
 	 * ***************************************************************************************/
@@ -37,7 +45,6 @@ public class Video {
 	public void setCategory(Category category) {
 		categorys.add(category);
 	}
-
 	
 	/* ****************************************************************************************
 	 * ****************************GETTERS / SETTERS*******************************************

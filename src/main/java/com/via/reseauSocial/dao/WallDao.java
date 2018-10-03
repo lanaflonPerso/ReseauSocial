@@ -9,9 +9,8 @@ import com.via.reseauSocial.beans.Brick;
 import com.via.reseauSocial.beans.User;
 
 @Repository
-public interface UserDao extends JpaRepository<User, Integer> {
+public interface WallDao extends JpaRepository<Brick, Integer> {
 
-	User findById(int id);
-	User findByEmail(String email);
-	User findByEmailAndPassword(String email, String password);
+	Brick findById(int id);
+	List<Brick> findByFollowersAndShare(User user, boolean share);
 }

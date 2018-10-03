@@ -31,7 +31,7 @@ public class LikeControler {
 		 * --------------------------------- A EFFACER -----------------------------------
 		 *********************************************************************************/
 		User user= userDao.findById(1);
-		System.out.println("id = "+id);
+
 		Likable likable= likableDao.findById(id);
 		LikeDislike myLike= likeDao.findByUserAndLikable(user, likable);
 		LikeBo lBo= new LikeBo();

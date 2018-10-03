@@ -100,7 +100,16 @@ public class People extends Likable {
 		this.picture = picture;
 	}
 
+
+	@Override
+	public String toString() {
+		return "People [firstName=" + firstName + ", lastName=" + lastName + ", nickName=" + nickName + ", biography="
+				+ biography + ", picture=" + picture + ", birthday=" + birthday + ", roles=" + roles + ", toString()="
+				+ super.toString() + "]";
+	}
+
 	/* ****************************************************************************************
 	 * ***************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
+	
 }

@@ -70,6 +70,11 @@ public class Likable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	/* ****************************************************************************************
 	 * ****************************OVERRIDES***************************************************

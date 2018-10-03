@@ -1,6 +1,7 @@
 package com.via.reseauSocial.web.controler;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +39,30 @@ public class UserControler {
 	}
 	
 	@PostMapping(value = "/users/sign-in")
-    public ResponseEntity<String> signIn(@RequestBody User user, HttpServletRequest request) {
+	public ResponseEntity<String> signIn(@RequestBody User user, HttpServletRequest request) {
+		System.out.println(user);
+		User newUser= userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		if(newUser != null) {
+			System.out.println("ok!");
+			request.getSession().setAttribute("user", newUser);
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body("vous êtes connecté");
+		} else {
+			System.out.println("pas OK!");
+			return ResponseEntity
+					.status(HttpStatus.NOT_FOUND)
+					.body("Erreur dans le formulaire de connexion!");
+		}
+	}
+	
+	@PostMapping(value = "/users/sign-up")
+    public ResponseEntity<String> signUp(@RequestBody User user, HttpServletRequest request) {
 		
-		userCtrl.signUpCtrl(user);
+		userCtrl.signUpCtrl(user, userDao);
 		if(!userCtrl.isError()) {
+			user.setType("user");
+			user.setCreatedDate(new Date());
 			User newUser= userDao.save(user);
 			request.getSession().setAttribute("user", newUser);
 	

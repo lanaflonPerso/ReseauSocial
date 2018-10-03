@@ -6,12 +6,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name= "User")
@@ -25,13 +28,16 @@ public class User extends Likable {
 	@Column(nullable=false)
 	private String email;
 	private String city;
+	
 	@Column(nullable=false)
 	private String password;
+	
+//	@JsonIgnore
 	@Transient
 	private String pass2;
 	
-	@ManyToMany(mappedBy = "followers")
-	private List<Brick> bricks= new ArrayList<>();
+//	@ManyToMany(mappedBy = "followers", fetch=FetchType.LAZY)
+//	private List<Brick> bricks= new ArrayList<>();
 	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
@@ -83,19 +89,19 @@ public class User extends Likable {
 	public void setPassword(String password) {
 			this.password = MySQLPassword(password);
 	}
-	public List<Brick> getBricks() {
-		return bricks;
-	}
-	public void setBricks(List<Brick> bricks) {
-		this.bricks = bricks;
-	}
+//	public List<Brick> getBricks() {
+//		return bricks;
+//	}
+//	public void setBricks(List<Brick> bricks) {
+//		this.bricks = bricks;
+//	}
 	public String getPass2() {
 		return pass2;
 	}
-	
 	public void setPass2(String pass2) {
 		this.pass2 = MySQLPassword(pass2);
 	}
+	
 	
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************
@@ -117,7 +123,7 @@ public class User extends Likable {
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", city=" + city
-				+ ", password=" + password + ", bricks=" + bricks + "]";
+				+ ", password=" + password + "]";
 	}
 
 	@Override

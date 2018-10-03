@@ -23,8 +23,8 @@ public class Comment {
 	@ManyToOne
 	private User user;
 	@Column(length=500)
-	private String contenu;
-	@Temporal(value=TemporalType.DATE)
+	private String content;
+	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date createdDate;
 	
 	/* ****************************************************************************************
@@ -42,11 +42,11 @@ public class Comment {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public String getContenu() {
-		return contenu;
+	public String getContent() {
+		return content;
 	}
-	public void setContenu(String textValue) {
-		this.contenu = textValue;
+	public void setContent(String textValue) {
+		this.content = textValue;
 	}
 	public Brick getBrick() {
 		return brick;

@@ -13,20 +13,45 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.via.reseauSocial.beans.People;
+import com.via.reseauSocial.beans.Video;
 import com.via.reseauSocial.ctrl.PeopleCtrl;
 import com.via.reseauSocial.dao.PeopleDao;
+import com.via.reseauSocial.dao.VideoDao;
 
 @RestController
 public class PeopleControler {
 
 	@Autowired
 	private PeopleDao peopleDao;
+	
+	@Autowired
+	private VideoDao videoDao;
+	
 	@Autowired
 	private PeopleCtrl peopleCtrl;
 	
 	@GetMapping(value = "/peoples/{id}")
 	public People viewPeople(@PathVariable int id) {
 	    return peopleDao.findById(id);
+	}
+	
+	@PostMapping(value = "/peoples/add/actor/{type}")
+    public ResponseEntity<String> addPeopleWithType(@RequestBody People people, @PathVariable("id") int id) {		
+		peopleCtrl.AddPeopleCtrl(people);	
+	
+		if(!peopleCtrl.isError()) {
+			Video video= videoDao.findById(id);
+			video.setActor(people);
+			Video newVideo= videoDao.save(video);
+			URI location= ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(newVideo.getId())
+					.toUri();
+			return ResponseEntity.created(location).build();
+		}
+		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+	            .body("Erreur dans le formulaire de création");
 	}
 	
 	@PostMapping(value = "/peoples/add")
@@ -44,6 +69,5 @@ public class PeopleControler {
 		}
 		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
 	            .body("Erreur dans le formulaire de création");
-	
 	}
 }

@@ -3,7 +3,6 @@ package com.via.reseauSocial.ctrl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.via.reseauSocial.beans.User;
@@ -12,26 +11,23 @@ import com.via.reseauSocial.dao.UserDao;
 @Component
 public class UserCtrl extends Ctrl {
 	
-	@Autowired
-	private UserDao userDao;
-	
 	private String msgUser;
 	private String msgEmail;
 	private String msgPassword;
 	private String msgCity;
 	
-	public void signUpCtrl(User user) {
+	public void signUpCtrl(User user, UserDao userDao) {
 		ctrlFirstName(user.getFirstName());
 		ctrlLastName(user.getLastName());	
 		ctrlEmail(user.getEmail());
 		ctrlPasswordEquals(user.getPassword(), user.getPass2());
 		ctrlPasswordLength(user.getPassword());
 		if (!error) {
-			userExist(user.getEmail());
+			userExist(user.getEmail(), userDao);
 		}
 	}
 
-	public void userExist(String email) {
+	public void userExist(String email, UserDao userDao) {
 		User userExist= userDao.findByEmail(email);
 		if (userExist != null) {
 			msgUser= "l'adresse email est déja utilisée";
@@ -81,7 +77,7 @@ public class UserCtrl extends Ctrl {
 
 	@Override
 	public String toString() {
-		return "UserCtrl [userDao=" + userDao + ", msgUser=" + msgUser + ", msgEmail=" + msgEmail + ", msgPassword="
+		return "UserCtrl [msgUser=" + msgUser + ", msgEmail=" + msgEmail + ", msgPassword="
 				+ msgPassword + ", msgCity=" + msgCity + ", msgFirstName=" + msgFirstName + ", msgLastName="
 				+ msgLastName + ", msgReleaseDate=" + msgReleaseDate + ", error=" + error + "]";
 	}

@@ -1,7 +1,15 @@
 package com.via.reseauSocial.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -9,7 +17,7 @@ import javax.persistence.Table;
 @Table(name="Movie")
 @PrimaryKeyJoinColumn(name="id") 
 //@JsonIgnoreProperties(value = {"studio", "picture"})
-public class Movie extends Likable {
+public class Movie extends Video {
 	
 	private String title;
 	private int releaseDate;
@@ -17,6 +25,14 @@ public class Movie extends Likable {
 	private String picture;
 	@Column(length = 1500)
 	private String synopsis;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinTable(
+		name= "Movie_Actor",
+		joinColumns = { @JoinColumn(name = "movie_id") },
+		inverseJoinColumns = { @JoinColumn(name = "Actor_id") }
+	)
+	private List<People> actors= new ArrayList<>();
 	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
@@ -32,6 +48,11 @@ public class Movie extends Likable {
 		super(id);
 		this.title = title;
 		this.synopsis = synopsis;
+	}
+	
+	
+	public void setActor(People actor) {
+		this.actors.add(actor);
 	}
 	/* ****************************************************************************************
 	 * ****************************GETTERS / SETTERS*******************************************
@@ -65,6 +86,12 @@ public class Movie extends Likable {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public List<People> getActors() {
+		return actors;
+	}
+	public void setActors(List<People> actors) {
+		this.actors = actors;
 	}
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************

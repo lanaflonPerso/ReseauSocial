@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -33,7 +34,7 @@ public class Brick {
 	@ManyToOne
 	@JoinColumn(name="likable_id", nullable=false)
 	private Likable likable;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinTable(
 		name= "Brick_Follower",
 		joinColumns = { @JoinColumn(name = "brick_id") },
@@ -43,7 +44,7 @@ public class Brick {
 	private boolean share;
 	@Column(length = 500)
 	private String html;
-	@OneToMany(mappedBy = "wall")
+	@OneToMany(mappedBy = "brick")
 	private List<Comment> comments= new LinkedList<>();
 	@Temporal(value=TemporalType.DATE)
 	private Date createdDate;
@@ -63,6 +64,10 @@ public class Brick {
 	
 	public int countComment() {
 		return comments.size();
+	}
+	
+	public void setComment(Comment comment) {
+		this.comments.add(comment);
 	}
 	
 	/* ****************************************************************************************
