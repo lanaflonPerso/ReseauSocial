@@ -3,8 +3,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import com.springsource.tcserver.serviceability.request.DataSource;
-
 @Configuration
 @ComponentScan("com.via.jdbc")
 public class SpringJdbcConfig {

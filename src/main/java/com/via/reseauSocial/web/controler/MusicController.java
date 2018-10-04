@@ -28,14 +28,27 @@ public class MusicController {
 	private AlbumCtrl albumCtrl;
 	
 	
-	@GetMapping(value = "/music/groups/seach/{name}")
+	@GetMapping(value= "/music/groups/seach/{name}")
 	public List<GroupMusic> searchGroup(@PathVariable String name) {
 	    return groupDao.findByBandNameContaining(name);		
 	}
 	
-	@PostMapping(value = "music/albums/add")
+	@GetMapping(value= "/music/album/{id}")
+	public Album findAlbum(@PathVariable int id) {
+	    return albumDao.findById(id);		
+	}
+	
+	@PostMapping(value= "music/albums/add")
 	public void addAlbum(@RequestBody Album album ) {
 		albumCtrl.addAlbumCtrl(album);
+		if(!albumCtrl.isError()) {
+			albumDao.save(album);
+		}
+	}
+	
+	@PostMapping(value= "/music/album/update")
+	public void updateAlbum(@RequestBody Album album) {
+		albumCtrl.updateCtrl(album);
 		if(!albumCtrl.isError()) {
 			albumDao.save(album);
 		}

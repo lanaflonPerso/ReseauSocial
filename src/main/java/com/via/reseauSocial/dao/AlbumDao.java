@@ -8,4 +8,5 @@ import com.via.reseauSocial.beans.Album;
 @Repository
 public interface AlbumDao extends JpaRepository<Album, Integer> {
 
+	Album findById(int id);
 }

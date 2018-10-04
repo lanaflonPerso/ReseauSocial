@@ -44,4 +44,9 @@ public class Song extends Likable {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	@Override
+	public String toString() {
+		return "Song [title=" + title + ", album=" + album + ", number=" + number + ", duration=" + duration
+				+ ", toString()=" + super.toString() + "]";
+	}
 }

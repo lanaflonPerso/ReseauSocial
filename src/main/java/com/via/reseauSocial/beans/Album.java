@@ -1,8 +1,9 @@
 package com.via.reseauSocial.beans;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -18,8 +19,8 @@ public class Album extends Likable {
 	private int releaseDate;
 	@ManyToOne
 	private GroupMusic group;
-	@OneToMany
-	private List<Song> songs= new LinkedList<>();
+	@OneToMany(cascade= CascadeType.ALL)
+	private List<Song> songs= new ArrayList<>();
 	private String picture;
 	private String description;
 	
