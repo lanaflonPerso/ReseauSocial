@@ -20,8 +20,8 @@ public class People extends Likable {
 	private String firstName;
 	private String lastName;
 	private String nickName;
-	@Column(length = 800)
-	private String biography;
+//	@Column(length = 800)
+//	private String biography;
 	private String picture;
 	
 	@Column
@@ -83,16 +83,16 @@ public class People extends Likable {
 	public void setFunctions(List<Role> roles) {
 		this.roles = roles;
 	}
-	public String getBiography() {
-		return biography;
-	}
-	public void setBiography(String biography) {
-		if(biography.length() < 800) {
-			this.biography = biography;
-		} else {
-			this.biography = biography.substring(0, 799);
-		}
-	}
+//	public String getBiography() {
+//		return biography;
+//	}
+//	public void setBiography(String biography) {
+//		if(biography.length() < 800) {
+//			this.biography = biography;
+//		} else {
+//			this.biography = biography.substring(0, 799);
+//		}
+//	}
 	public String getPicture() {
 		return picture;
 	}
@@ -103,8 +103,7 @@ public class People extends Likable {
 
 	@Override
 	public String toString() {
-		return "People [firstName=" + firstName + ", lastName=" + lastName + ", nickName=" + nickName + ", biography="
-				+ biography + ", picture=" + picture + ", birthday=" + birthday + ", roles=" + roles + ", toString()="
+		return "People [firstName=" + firstName + ", lastName=" + lastName + ", nickName=" + nickName + ", picture=" + picture + ", birthday=" + birthday + ", roles=" + roles + ", toString()="
 				+ super.toString() + "]";
 	}
 

@@ -1,6 +1,7 @@
 package com.via.reseauSocial.ctrl;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class PeopleCtrl extends Ctrl {
 		ctrlLastName(people.getLastName());
 		ctrlPicture(people.getPicture());
 		ctrlBirthday(people.getBirthday());
-		ctrlBiogrphy(people.getBiography());
+//		ctrlBiogrphy(people.getBiography());
 		if(!error) {
 			peopleExist(people.getFirstName(), people.getLastName());
 		}
@@ -34,6 +35,9 @@ public class PeopleCtrl extends Ctrl {
 		if(people != null) {
 			msgPeople= "Une personnalité avec le mêne nom et prénom et déja en base!";
 			error= true;
+		} else {
+			people.setCreatedDate(new Date());
+			people.setType("people");			
 		}
 	}
 	

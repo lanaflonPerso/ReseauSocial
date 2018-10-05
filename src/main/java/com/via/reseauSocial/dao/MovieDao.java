@@ -9,7 +9,6 @@ import com.via.reseauSocial.beans.Movie;
 
 @Repository
 public interface MovieDao extends JpaRepository<Movie, Integer> { 
-	
 	Movie findById(int id);
 	Movie findByTitleAndReleaseDate(String title, int releaseDate);
 	List<Movie> findByTitleContaining(String title);

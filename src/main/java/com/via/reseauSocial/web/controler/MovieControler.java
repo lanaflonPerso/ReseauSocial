@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.via.reseauSocial.beans.Movie;
-import com.via.reseauSocial.beans.People;
 import com.via.reseauSocial.ctrl.MovieCtrl;
 import com.via.reseauSocial.dao.MovieDao;
 
@@ -26,17 +25,17 @@ public class MovieControler {
 	@Autowired
 	private MovieCtrl movieCtrl;
 	
-	@GetMapping(value = "/movies")
+	@GetMapping(value= "/movies")
     public List<Movie> listMovies() {
        return movieDao.findAll();
     }
 	
-	@GetMapping(value = "/movies/{id}")
+	@GetMapping(value= "/movies/{id}")
 	public Movie viewMovie(@PathVariable int id) {
 	    return movieDao.findById(id);
 	}
 	
-    @PostMapping(value = "/movies/add")
+    @PostMapping(value= "/movies/add")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
     	movieCtrl.addMovieCtrl(movie);
     	if(!movieCtrl.isError()) {
@@ -54,29 +53,20 @@ public class MovieControler {
     	
     }
     
-    @GetMapping(value = "/movies/search/{title}")
+    @PostMapping(value= "/movie/update")
+    public ResponseEntity<String> updateMovie(@RequestBody Movie movie) {
+    		System.out.println("movie= "+movie);
+    	movieCtrl.updateCtrl(movie);
+    	System.out.println("ctrl= "+ movieCtrl);
+    	if(!movieCtrl.isError()) {
+    		movieDao.save(movie);
+    		return ResponseEntity.status(HttpStatus.CREATED).body("Le film a bien été mis a jour");
+    	}
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur su la mise a jour!");
+    }
+    
+    @GetMapping(value= "/movies/search/{title}")
 	public List<Movie> searchMovie(@PathVariable String title) {
     	return movieDao.findByTitleContaining(title);
-	}
-    
-    
-    @GetMapping(value = "/movies/fixture/1")
-	public void fixtureOne() {
-    	Movie m= new Movie();
-    	People pOne= new People();
-    	pOne.setType("people");
-    	pOne.setFirstName("Sandra");
-    	pOne.setLastName("Bullock");
-    	pOne.setPicture("https://image.tmdb.org/t/p/w600_and_h900_bestv2/aCa4ELD1MfsVjLWYAynYbhXHQmu.jpg");
-    	pOne.setBiography("Sandra Bullock est une actrice germano-américaine née le 26 juillet 1964 à Arlington, en Virginie (États-Unis). Elle accède à la reconnaissance du grand public après avoir joué dans des films à succès tels que Demolition Man, Speed ou L'Amour à tout prix et est depuis devenue une des actrices les plus populaires d'Hollywood grâce à des films comme Miss Détective et Collision qui ont reçu des critiques positives…");
-    	
-    	m.setType("movie");
-    	m.setTitle("La Proposition");
-    	m.setReleaseDate(2009);
-    	m.setPicture("https://image.tmdb.org/t/p/w600_and_h900_bestv2/7MQdp9iPY3917AmgnKYgHyaVsTJ.jpg");
-    	m.setSynopsis("Une patronne exigeante est forcée de quitter les États-Unis pour retourner dans son pays d'origine : le Canada. Elle accepte par la force des choses de contracter un mariage blanc avec son jeune assistant, dans le but de ne pas partir.");
-    	System.out.println(pOne);
-    	m.setActor(pOne);
-    	movieDao.save(m);
 	}
 }

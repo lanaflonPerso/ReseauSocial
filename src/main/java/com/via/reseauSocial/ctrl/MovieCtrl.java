@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.via.reseauSocial.beans.Movie;
+import com.via.reseauSocial.beans.People;
 import com.via.reseauSocial.dao.MovieDao;
+import com.via.reseauSocial.dao.PeopleDao;
 
 @Component
 public class MovieCtrl extends Ctrl {
 
 	@Autowired
 	private MovieDao movieDao;
+	
+	@Autowired
+	private PeopleDao peopleDao;
 	
 	private String msgMovie;
 	private String msgTitle;
@@ -27,11 +32,30 @@ public class MovieCtrl extends Ctrl {
 		}
 	}
 	
+	public void updateCtrl(Movie movie) {
+		ctrlTitle(movie.getTitle());
+		ctrlPicture(movie.getPicture());
+		ctrlDate(movie.getReleaseDate());
+		ctrlSynopsis(movie.getSynopsis());
+		for (People actor : movie.getActors()) {
+			peopleExist(actor);
+		}
+		
+	}
+	
 	public void movieExist(String title, int releaseDate) {
 		Movie movie= movieDao.findByTitleAndReleaseDate(title, releaseDate);
 		if(movie != null) {
 			msgMovie= "Un film avec le même titre et sortie la même année est déja dans la base!";
 			error= true;
+		}
+	}
+	
+	public void peopleExist(People people) {
+		People newPeople= peopleDao.findByFirstNameAndLastName(people.getFirstName(), people.getLastName());
+		if(newPeople != null) {
+			System.out.println("people EXIST");
+			people= newPeople;
 		}
 	}
 	
