@@ -22,6 +22,7 @@ public class Album extends Likable {
 	@OneToMany(cascade= CascadeType.ALL)
 	private List<Song> songs= new ArrayList<>();
 	private String picture;
+	@Column(length = 1500)
 	private String description;
 	
 	/* ****************************************************************************************

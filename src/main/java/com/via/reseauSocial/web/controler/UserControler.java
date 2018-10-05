@@ -38,22 +38,23 @@ public class UserControler {
 	    return userDao.findById(id);
 	}
 	
-	@PostMapping(value = "/users/sign-in")
-	public ResponseEntity<String> signIn(@RequestBody User user, HttpServletRequest request) {
+	@GetMapping(value= "/users/sign-out")
+	public ResponseEntity<String> signOut(HttpServletRequest request) {
+		request.getSession().invalidate();
+		System.out.println("deconnection OK!");
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body("Déconnexion Ok");
+	}
+	
+	@PostMapping(value= "/users/sign-in")
+	public User signIn(@RequestBody User user, HttpServletRequest request) {
 		System.out.println(user);
 		User newUser= userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		if(newUser != null) {
-			System.out.println("ok!");
-			request.getSession().setAttribute("user", newUser);
-			return ResponseEntity
-					.status(HttpStatus.OK)
-					.body("vous êtes connecté");
-		} else {
-			System.out.println("pas OK!");
-			return ResponseEntity
-					.status(HttpStatus.NOT_FOUND)
-					.body("Erreur dans le formulaire de connexion!");
-		}
+			request.getSession().setAttribute("user", newUser);		
+		} 
+		return newUser;
 	}
 	
 	@PostMapping(value = "/users/sign-up")
