@@ -20,8 +20,8 @@ public class People extends Likable {
 	private String firstName;
 	private String lastName;
 	private String nickName;
-//	@Column(length = 800)
-//	private String biography;
+	@Column(length = 800)
+	private String biography;
 	private String picture;
 	
 	@Column
@@ -29,9 +29,9 @@ public class People extends Likable {
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(
-		name= "PeopleContent_Function",
+		name= "PeopleContent_Role",
 		joinColumns = { @JoinColumn(name = "people_id") },
-		inverseJoinColumns = { @JoinColumn(name = "function_id") }
+		inverseJoinColumns = { @JoinColumn(name = "Role_id") }
 	)
 	private List<Role> roles= new ArrayList<>();
 	
@@ -46,7 +46,7 @@ public class People extends Likable {
 	/* ****************************************************************************************
 	 * ***************************GETTERS / SETTERS PERSONEL**********************************
 	 * ***************************************************************************************/
-	public void setFunction(Role role) {
+	public void setRole(Role role) {
 		roles.add(role);
 	}
 	
@@ -77,38 +77,39 @@ public class People extends Likable {
 	public void setBirthday(int year) {
 		this.birthday = year;
 	}
-	public List<Role> getRoles() {
-		return roles;
+	public String getBiography() {
+		return biography;
 	}
-	public void setFunctions(List<Role> roles) {
-		this.roles = roles;
+	public void setBiography(String biography) {
+		if(biography.length() < 800) {
+			this.biography = biography;
+		} else {
+			this.biography = biography.substring(0, 800);
+		}
 	}
-//	public String getBiography() {
-//		return biography;
-//	}
-//	public void setBiography(String biography) {
-//		if(biography.length() < 800) {
-//			this.biography = biography;
-//		} else {
-//			this.biography = biography.substring(0, 799);
-//		}
-//	}
 	public String getPicture() {
 		return picture;
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-
-
-	@Override
-	public String toString() {
-		return "People [firstName=" + firstName + ", lastName=" + lastName + ", nickName=" + nickName + ", picture=" + picture + ", birthday=" + birthday + ", roles=" + roles + ", toString()="
-				+ super.toString() + "]";
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	public void setBirthday(Integer birthday) {
+		this.birthday = birthday;
 	}
 
 	/* ****************************************************************************************
 	 * ***************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
+	@Override
+	public String toString() {
+		return "People [firstName=" + firstName + ", lastName=" + lastName + ", nickName=" + nickName + ", picture=" + picture + ", birthday=" + birthday + ", roles=" + roles + ", toString()="
+				+ super.toString() + "]";
+	}
 	
 }

@@ -63,4 +63,8 @@ public class Video extends Likable {
 	public List<People> getActors() {
 		return actors;
 	}
+	@Override
+	public String toString() {
+		return "Video [actors=" + actors + ", categorys=" + categorys + ", toString()=" + super.toString() + "]";
+	}
 }

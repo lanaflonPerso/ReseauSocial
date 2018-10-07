@@ -99,7 +99,7 @@ public class Movie extends Video {
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", releaseDate=" + releaseDate + ", studio=" + studio + ", picture=" + picture
-				+ ", synopsis=" + synopsis + ", toString()=" + super.toString() + "]";
+				+ ", synopsis=" + synopsis + ", actors=" + actors + ", toString()=" + super.toString() + "]";
 	}
 	
 }

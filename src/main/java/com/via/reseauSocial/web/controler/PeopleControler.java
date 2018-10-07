@@ -1,6 +1,7 @@
 package com.via.reseauSocial.web.controler;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,19 @@ public class PeopleControler {
 	@Autowired
 	private PeopleCtrl peopleCtrl;
 	
-	@GetMapping(value = "/peoples/{id}")
-	public People viewPeople(@PathVariable int id) {
-	    return peopleDao.findById(id);
+	@GetMapping(value= "/peoples/search/{lastName}")
+	public List<People> searchByLastName(@PathVariable String lastName) {
+		return peopleDao.findByLastNameContaining(lastName);
 	}
 	
-	@PostMapping(value = "/peoples/add/actor/{type}")
+	@GetMapping(value= "/peoples/{id}")
+	public People viewPeople(@PathVariable int id) {
+		People p= peopleDao.findById(id);
+		System.out.println(p.toString());
+	    return p;  //peopleDao.findById(id);
+	}
+	
+	@PostMapping(value= "/peoples/add/actor/{type}")
     public ResponseEntity<String> addPeopleWithType(@RequestBody People people, @PathVariable("id") int id) {		
 		peopleCtrl.AddPeopleCtrl(people);	
 	
@@ -54,7 +62,7 @@ public class PeopleControler {
 	            .body("Erreur dans le formulaire de création");
 	}
 	
-	@PostMapping(value = "/peoples/add")
+	@PostMapping(value= "/peoples/add")
     public ResponseEntity<String> addPeople(@RequestBody People people) {
 		peopleCtrl.AddPeopleCtrl(people);	
 		

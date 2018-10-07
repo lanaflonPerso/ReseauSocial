@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.via.reseauSocial.beans.Movie;
+import com.via.reseauSocial.beans.People;
 import com.via.reseauSocial.ctrl.MovieCtrl;
 import com.via.reseauSocial.dao.MovieDao;
 
@@ -36,21 +38,41 @@ public class MovieControler {
 	}
 	
     @PostMapping(value= "/movies/add")
-    public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Void> addMovie(@RequestBody Movie movie) {
+    	ResponseEntity<Void> result= null;
+    	System.out.println(movie);
     	movieCtrl.addMovieCtrl(movie);
-    	if(!movieCtrl.isError()) {
-    		Movie newMovie= movieDao.save(movie);
-    		URI location= ServletUriComponentsBuilder
-    				.fromCurrentRequest()
-    				.path("/{id}")
-    				.buildAndExpand(newMovie.getId())
-    				.toUri();
-    		
-    		return ResponseEntity.created(location).build();
-    	}
-    	return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-	            .body("Erreur dans le formulaire de création de film");
     	
+    	System.out.println("movieCtrl = "+movieCtrl);
+    	
+    	if(!movieCtrl.isError()) {
+    		for (People actor : movie.getActors()) {
+				System.out.println("actor= " +actor.toString());
+			}
+    		Movie newMovie= movieDao.save(movie);
+    		URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(newMovie.getId())
+                    .toUri();
+    		
+    		
+    		
+    		final HttpHeaders headers = new HttpHeaders();
+    		headers.add("id", String.valueOf(newMovie.getId()));
+    		headers.setLocation(location);
+
+    		
+    		
+
+            result= new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    	} else {
+    		result= new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+    	}
+    	System.out.println("=================================================");
+    	System.out.println(result);
+    	System.out.println("=================================================");
+    	return result;    	
     }
     
     @PostMapping(value= "/movie/update")

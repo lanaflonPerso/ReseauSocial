@@ -4,19 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.via.reseauSocial.beans.Movie;
-import com.via.reseauSocial.beans.People;
+import com.via.reseauSocial.beans.Role;
 import com.via.reseauSocial.dao.MovieDao;
-import com.via.reseauSocial.dao.PeopleDao;
 
 @Component
 public class MovieCtrl extends Ctrl {
 
 	@Autowired
 	private MovieDao movieDao;
-	
-	@Autowired
-	private PeopleDao peopleDao;
-	
+		
 	private String msgMovie;
 	private String msgTitle;
 	private String msgPicture;
@@ -27,6 +23,18 @@ public class MovieCtrl extends Ctrl {
 		ctrlPicture(movie.getPicture());
 		ctrlDate(movie.getReleaseDate());
 		ctrlSynopsis(movie.getSynopsis());
+		if(movie.getActors() != null) {
+			for (int i = 0; i < movie.getActors().size(); i++) {
+				Role role= new Role("actor");
+				movie.getActors().set(i, peopleExist(movie.getActors().get(i), role));
+			}
+		}
+//		if (movie.getCategorys() != null) {
+//			for (Category category : movie.getCategorys()) {
+//				categoryExist(category, "video");
+//			}
+//		}
+			
 		if(!error) {
 			movieExist(movie.getTitle(), movie.getReleaseDate());
 		}
@@ -37,9 +45,7 @@ public class MovieCtrl extends Ctrl {
 		ctrlPicture(movie.getPicture());
 		ctrlDate(movie.getReleaseDate());
 		ctrlSynopsis(movie.getSynopsis());
-		for (People actor : movie.getActors()) {
-			peopleExist(actor);
-		}
+//		peopleExist(movie);
 		
 	}
 	
@@ -48,14 +54,6 @@ public class MovieCtrl extends Ctrl {
 		if(movie != null) {
 			msgMovie= "Un film avec le même titre et sortie la même année est déja dans la base!";
 			error= true;
-		}
-	}
-	
-	public void peopleExist(People people) {
-		People newPeople= peopleDao.findByFirstNameAndLastName(people.getFirstName(), people.getLastName());
-		if(newPeople != null) {
-			System.out.println("people EXIST");
-			people= newPeople;
 		}
 	}
 	
