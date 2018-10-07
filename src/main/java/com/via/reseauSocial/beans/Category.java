@@ -10,15 +10,17 @@ import javax.persistence.Table;
 public class Category extends Likable {
 	
 	private String name;
+	private String typeCategory;
 	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
 	 * ***************************************************************************************/
 	public Category() {	}
 	
-	public Category(String name) {
+	public Category(String name, String typeCategory) {
 		super();
 		this.name = name;
+		this.typeCategory= typeCategory;
 	}
 
 	/* ****************************************************************************************
@@ -30,4 +32,17 @@ public class Category extends Likable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getTypeCategory() {
+		return typeCategory;
+	}
+	public void setTypeCategory(String typeCategory) {
+		this.typeCategory = typeCategory;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [name=" + name + ", type=" + typeCategory + "]";
+	}
+	
+	
 }
