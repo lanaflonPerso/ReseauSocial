@@ -1,16 +1,19 @@
 package com.via.reseauSocial.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name= "Function")
+@Table(name= "Role")
 public class Role {
 	
-	@Id
-	@GeneratedValue
+	@Id  
+	@GeneratedValue(strategy=GenerationType.AUTO)     
+	@Column(name = "id")
 	private int id;
 	private String roleName;
 	
