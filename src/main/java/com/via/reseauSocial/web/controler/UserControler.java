@@ -1,12 +1,12 @@
 package com.via.reseauSocial.web.controler;
 
 import java.net.URI;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +25,6 @@ public class UserControler {
 
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private UserCtrl userCtrl;
 	
 	@GetMapping(value = "/users")
     public List<User> listUsers() {
@@ -58,24 +56,23 @@ public class UserControler {
 	}
 	
 	@PostMapping(value = "/users/sign-up")
-    public ResponseEntity<String> signUp(@RequestBody User user, HttpServletRequest request) {
+    public ResponseEntity<Void> signUp(@RequestBody User user, HttpServletRequest request) {
+		ResponseEntity<Void> result= null;
+		UserCtrl userCtrl= new UserCtrl();
 		
 		userCtrl.signUpCtrl(user, userDao);
 		if(!userCtrl.isError()) {
-			user.setType("user");
-			user.setCreatedDate(new Date());
+			
 			User newUser= userDao.save(user);
 			request.getSession().setAttribute("user", newUser);
 	
-			URI location= ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(1)
-					.toUri();
-			return ResponseEntity.created(location).build();
-		}
-		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
-	            .body("Erreur dans le formulaire d'inscription");
+			final HttpHeaders headers = new HttpHeaders();
+    		headers.add("id", String.valueOf(newUser.getId()));
+            result= new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		}else {
+    		result= new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
+    	}
+		return result;
 	}
 	
 	@PostMapping(value = "/users")

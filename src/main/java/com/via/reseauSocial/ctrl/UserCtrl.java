@@ -1,5 +1,6 @@
 package com.via.reseauSocial.ctrl;
 
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,10 +21,12 @@ public class UserCtrl extends Ctrl {
 		ctrlFirstName(user.getFirstName());
 		ctrlLastName(user.getLastName());	
 		ctrlEmail(user.getEmail());
-		ctrlPasswordEquals(user.getPassword(), user.getPass2());
+		ctrlPasswordEquals(user.getPassword(), user.getPasswordC());
 		ctrlPasswordLength(user.getPassword());
 		if (!error) {
 			userExist(user.getEmail(), userDao);
+			user.setType("user");
+			user.setCreatedDate(new Date());
 		}
 	}
 

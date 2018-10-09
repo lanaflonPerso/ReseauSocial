@@ -1,10 +1,11 @@
 package com.via.reseauSocial.ctrl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.via.reseauSocial.beans.Movie;
-import com.via.reseauSocial.beans.Role;
 import com.via.reseauSocial.dao.MovieDao;
 
 @Component
@@ -25,19 +26,21 @@ public class MovieCtrl extends Ctrl {
 		ctrlSynopsis(movie.getSynopsis());
 		if(movie.getActors() != null) {
 			for (int i = 0; i < movie.getActors().size(); i++) {
-				Role role= new Role("actor");
-				movie.getActors().set(i, peopleExist(movie.getActors().get(i), role));
+				movie.getActors().set(i, peopleExist(movie.getActors().get(i), roleExist("actor")));
 			}
 		}
-//		if (movie.getCategorys() != null) {
-//			for (Category category : movie.getCategorys()) {
-//				categoryExist(category, "video");
-//			}
-//		}
+		
+		if (movie.getCategorys() != null) {
+			for (int i = 0; i < movie.getCategorys().size(); i++) {
+				movie.getCategorys().set(i, categoryExist(movie.getCategorys().get(i), "category-video"));
+			}
+		}
 			
 		if(!error) {
 			movieExist(movie.getTitle(), movie.getReleaseDate());
 		}
+		movie.setCreatedDate(new Date());
+		movie.setType("movie");
 	}
 	
 	public void updateCtrl(Movie movie) {

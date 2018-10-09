@@ -81,11 +81,7 @@ public class People extends Likable {
 		return biography;
 	}
 	public void setBiography(String biography) {
-		if(biography.length() < 800) {
 			this.biography = biography;
-		} else {
-			this.biography = biography.substring(0, 800);
-		}
 	}
 	public String getPicture() {
 		return picture;

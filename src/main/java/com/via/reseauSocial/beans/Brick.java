@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Brick {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
@@ -46,8 +47,9 @@ public class Brick {
 	private String html;
 	@OneToMany(mappedBy = "brick")
 	private List<Comment> comments= new LinkedList<>();
-	@Temporal(value=TemporalType.DATE)
+	@Temporal(value=TemporalType.TIMESTAMP)
 	private Date createdDate;
+	private String type;
 	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
@@ -121,7 +123,13 @@ public class Brick {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
@@ -130,4 +138,5 @@ public class Brick {
 		return "Mur [id=" + id + ", user=" + user + ", likable=" + likable + ", followers=" + followers + ", share="
 				+ share + ", html=" + html + "]";
 	}
+
 }

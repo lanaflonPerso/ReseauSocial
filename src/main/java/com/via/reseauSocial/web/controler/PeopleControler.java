@@ -3,6 +3,8 @@ package com.via.reseauSocial.web.controler;
 import java.net.URI;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +39,8 @@ public class PeopleControler {
 	}
 	
 	@GetMapping(value= "/peoples/{id}")
-	public People viewPeople(@PathVariable int id) {
-		People p= peopleDao.findById(id);
-		System.out.println(p.toString());
-	    return p;  //peopleDao.findById(id);
+	public People viewPeople(@PathVariable int id, HttpServletRequest request) {
+	    return peopleDao.findById(id);
 	}
 	
 	@PostMapping(value= "/peoples/add/actor/{type}")

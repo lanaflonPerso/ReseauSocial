@@ -22,6 +22,7 @@ public class Ctrl {
 	
 	@Autowired
 	private PeopleDao peopleDao;
+
 	
 	protected String msgFirstName;
 	protected String msgLastName;
@@ -29,18 +30,29 @@ public class Ctrl {
 	protected boolean error= false;
 	
 	
-	public void categoryExist(Category category, String type) {
-		Category newCategory= categoryDao.findByNameAndTypeCategory(category.getName(), type);
+	public Category categoryExist(Category category, String type) {
+		Category result= category;
+		Category newCategory= categoryDao.findByNameAndType(category.getName(), type);
 		if(newCategory != null) {
-			category= newCategory;
+			result= newCategory;
 		} else {
-			category.setTypeCategory(type);
+			result.setCreatedDate(new Date());
+			result.setType(type);
 		}
+		return result;
+	}
+	
+	public Role roleExist(String roleName) {
+		Role result= new Role(roleName);
+		Role newRole= roleDao.findByRoleName(roleName);
+		if(newRole != null) {
+			result= newRole;
+		} 
+		return result;
 	}
 	
 	public People peopleExist(People people, Role role) {
 		People result= null;
-		
 		
 		People newPeople= peopleDao.findByFirstNameAndLastName(people.getFirstName(), people.getLastName());
 		if(newPeople != null) {
@@ -51,26 +63,9 @@ public class Ctrl {
 			people.setRole(role);
 			result= people;
 		}
-		
-		for (int i = 0; i < people.getRoles().size(); i++) {
-			System.out.println("========= role dans for "+ people.getRoles().get(i));
-			if (people.getRoles().get(i).getId() == 0) { 
-				people.getRoles().set(i, roleExist(people.getRoles().get(i)));
-			}
-		}
 		return result;
 	}
 	
-	public Role roleExist(Role role) {
-		Role result= role;
-		Role newRole= roleDao.findByRoleName(role.getRoleName());
-		if(newRole != null) {
-			System.out.println("]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]] new role= "+ newRole);
-			result= newRole;
-		}
-		return result;
-	}
-
 	protected void ctrlDate(int releaseDate) {
 		LocalDate now= LocalDate.now();
 		if(releaseDate > now.getYear() || releaseDate < 1900) {

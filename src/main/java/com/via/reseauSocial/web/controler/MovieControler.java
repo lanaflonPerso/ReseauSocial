@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.via.reseauSocial.beans.Category;
 import com.via.reseauSocial.beans.Movie;
 import com.via.reseauSocial.beans.People;
+import com.via.reseauSocial.bo.BrickBo;
 import com.via.reseauSocial.ctrl.MovieCtrl;
+import com.via.reseauSocial.dao.BrickDao;
+import com.via.reseauSocial.dao.LikeDislikeDao;
 import com.via.reseauSocial.dao.MovieDao;
 
 @RestController
@@ -40,30 +44,20 @@ public class MovieControler {
     @PostMapping(value= "/movies/add")
     public ResponseEntity<Void> addMovie(@RequestBody Movie movie) {
     	ResponseEntity<Void> result= null;
-    	System.out.println(movie);
     	movieCtrl.addMovieCtrl(movie);
     	
-    	System.out.println("movieCtrl = "+movieCtrl);
-    	
     	if(!movieCtrl.isError()) {
-    		for (People actor : movie.getActors()) {
-				System.out.println("actor= " +actor.toString());
-			}
     		Movie newMovie= movieDao.save(movie);
+    		    		
     		URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}")
                     .buildAndExpand(newMovie.getId())
                     .toUri();
     		
-    		
-    		
     		final HttpHeaders headers = new HttpHeaders();
     		headers.add("id", String.valueOf(newMovie.getId()));
     		headers.setLocation(location);
-
-    		
-    		
 
             result= new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     	} else {

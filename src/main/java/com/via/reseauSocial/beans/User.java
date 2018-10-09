@@ -28,10 +28,7 @@ public class User extends Likable {
 	
 //	@JsonIgnore
 	@Transient
-	private String pass2;
-	
-//	@ManyToMany(mappedBy = "followers", fetch=FetchType.LAZY)
-//	private List<Brick> bricks= new ArrayList<>();
+	private String passwordC;
 	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
@@ -83,17 +80,11 @@ public class User extends Likable {
 	public void setPassword(String password) {
 			this.password = MySQLPassword(password);
 	}
-//	public List<Brick> getBricks() {
-//		return bricks;
-//	}
-//	public void setBricks(List<Brick> bricks) {
-//		this.bricks = bricks;
-//	}
-	public String getPass2() {
-		return pass2;
+	public String getPasswordC() {
+		return passwordC;
 	}
-	public void setPass2(String pass2) {
-		this.pass2 = MySQLPassword(pass2);
+	public void setPasswordC(String passwordC) {
+		this.passwordC = MySQLPassword(passwordC);
 	}
 	
 	
@@ -114,11 +105,7 @@ public class User extends Likable {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", city=" + city
-				+ ", password=" + password + "]";
-	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -155,5 +142,11 @@ public class User extends Likable {
 		} else if (!password.equals(other.password))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", city=" + city
+				+ ", password=" + password + ", passwordC=" + passwordC + "]";
 	}
 }

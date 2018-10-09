@@ -9,7 +9,7 @@ import com.via.reseauSocial.beans.Category;
 
 @Repository
 public interface CategoryDao extends JpaRepository<Category, Integer> {
-	List<Category> findByTypeCategory(String type);
+	List<Category> findByType(String type);
 	List<Category> findByNameContaining(String name);
-	Category findByNameAndTypeCategory(String name, String type);
+	Category findByNameAndType(String name, String type);
 }

@@ -18,7 +18,7 @@ public class CategoryControler {
 	
 	@GetMapping(value= "/category/{typeCategory}")
 	public List<Category> findByType(@PathVariable String typeCategory) {
-	    return categoryDao.findByTypeCategory(typeCategory);
+	    return categoryDao.findByType(typeCategory);
 	}
 	
 	@GetMapping(value= "/category/search/{name}")

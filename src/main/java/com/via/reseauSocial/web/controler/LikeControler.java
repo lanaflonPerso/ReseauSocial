@@ -9,47 +9,58 @@ import com.via.reseauSocial.beans.Likable;
 import com.via.reseauSocial.beans.LikeDislike;
 import com.via.reseauSocial.beans.User;
 import com.via.reseauSocial.bo.LikeBo;
+import com.via.reseauSocial.dao.BrickDao;
 import com.via.reseauSocial.dao.LikableDao;
-import com.via.reseauSocial.dao.LikeDao;
+import com.via.reseauSocial.dao.LikeDislikeDao;
 import com.via.reseauSocial.dao.UserDao;
 
 @RestController
 public class LikeControler {
 	
 	@Autowired
-	private LikeDao likeDao;
-	
+	private LikeDislikeDao likeDao;
 	@Autowired
 	private LikableDao likableDao;
-	
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private BrickDao brickDao;
+	
+	@GetMapping(value= "/like-dislike/{id}")
+	public LikeDislike searchLike(@PathVariable("id") int id) {
+		/* *******************************************************************************
+		 * --------------------------------- A EFFACER -----------------------------------
+		 *********************************************************************************/
+		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
+		
+		Likable likable= likableDao.findById(id);
+		return  likeDao.findByUserAndLikable(user, likable);
+	}
+	
 
-	@GetMapping(value = "/like/{id}")
+	@GetMapping(value= "/like/{id}")
     public void addLike(@PathVariable("id") int id) {
 		/* *******************************************************************************
 		 * --------------------------------- A EFFACER -----------------------------------
 		 *********************************************************************************/
-		User user= userDao.findById(1);
+		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
 
 		Likable likable= likableDao.findById(id);
 		LikeDislike myLike= likeDao.findByUserAndLikable(user, likable);
-		LikeBo lBo= new LikeBo();
-		lBo.createLike(likable, myLike, user, 1, likeDao);
-		
-		System.out.println("j'aime l'id= "+ id);
+		LikeBo lBo= new LikeBo(likeDao,brickDao);
+		lBo.createLike(likable, myLike, user, 1);
     }
 	
-	@GetMapping(value = "/dislike/{id}")
+	@GetMapping(value= "/dislike/{id}")
     public void addDislike(@PathVariable int id) {
 		/* *******************************************************************************
 		 * --------------------------------- A EFFACER -----------------------------------
 		 *********************************************************************************/
-		User user= userDao.findById(1);
+		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
 		
 		Likable likable= likableDao.findById(id);
 		LikeDislike myLike= likeDao.findByUserAndLikable(user, likable);
-		LikeBo lBo= new LikeBo();
-		lBo.createLike(likable, myLike, user, -1, likeDao);
+		LikeBo lBo= new LikeBo(likeDao,brickDao);
+		lBo.createLike(likable, myLike, user, -1);
     }
 }

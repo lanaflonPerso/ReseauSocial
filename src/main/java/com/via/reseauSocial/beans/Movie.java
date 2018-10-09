@@ -1,15 +1,7 @@
 package com.via.reseauSocial.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -26,14 +18,6 @@ public class Movie extends Video {
 	@Column(length = 1500)
 	private String synopsis;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinTable(
-		name= "Movie_Actor",
-		joinColumns = { @JoinColumn(name = "movie_id") },
-		inverseJoinColumns = { @JoinColumn(name = "Actor_id") }
-	)
-	private List<People> actors= new ArrayList<>();
-	
 	/* ****************************************************************************************
 	 * ****************************CONSTRUCTEUR************************************************
 	 * ***************************************************************************************/
@@ -49,11 +33,7 @@ public class Movie extends Video {
 		this.title = title;
 		this.synopsis = synopsis;
 	}
-	
-	
-	public void setActor(People actor) {
-		this.actors.add(actor);
-	}
+
 	/* ****************************************************************************************
 	 * ****************************GETTERS / SETTERS*******************************************
 	 * ***************************************************************************************/
@@ -87,19 +67,13 @@ public class Movie extends Video {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<People> getActors() {
-		return actors;
-	}
-	public void setActors(List<People> actors) {
-		this.actors = actors;
-	}
 	/* ****************************************************************************************
 	 * ****************************OVERRIDE****************************************************
 	 * ***************************************************************************************/
 	@Override
 	public String toString() {
 		return "Movie [title=" + title + ", releaseDate=" + releaseDate + ", studio=" + studio + ", picture=" + picture
-				+ ", synopsis=" + synopsis + ", actors=" + actors + ", toString()=" + super.toString() + "]";
+				+ ", synopsis=" + synopsis + ", toString()=" + super.toString() + "]";
 	}
 	
 }

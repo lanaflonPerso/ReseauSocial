@@ -45,7 +45,7 @@ public class WallControler {
     		/* *******************************************************************************
     		 * --------------------------------- A EFFACER -----------------------------------
     		 *********************************************************************************/
-    		User user= userDao.findById(1);
+    		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
     		
     		brick.setCreatedDate(new Date());
     		brick.setLikable(user);
@@ -70,7 +70,7 @@ public class WallControler {
 		/* *******************************************************************************
 		 * --------------------------------- A EFFACER -----------------------------------
 		 *********************************************************************************/
-		User user= userDao.findById(11);
+		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
 		
 		return wallDao.findByFollowersAndShare(user, true);
 	}
@@ -80,7 +80,7 @@ public class WallControler {
 		/* *******************************************************************************
 		 * --------------------------------- A EFFACER -----------------------------------
 		 *********************************************************************************/
-		User user= userDao.findById(1);
+		User user= userDao.findByFirstNameAndLastName("vianney", "bailleux");
 		
 		Brick brick= wallDao.findById(id);
 		comment.setCreatedDate(new Date());
